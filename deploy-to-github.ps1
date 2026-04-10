@@ -2,7 +2,7 @@
 # Deploy: push this repo to GitHub (triggers GitHub Pages workflow).
 
 # ============ config ============
-$githubUsername = "YOUR_GITHUB_USERNAME"
+$githubUsername = "Comethrue"
 $repoName = "power-trading-console"
 
 # ============ main ============

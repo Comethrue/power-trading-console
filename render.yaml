@@ -22,6 +22,9 @@ plan: free
 
 # 环境变量（敏感信息请在 Render Dashboard 中设置）
 env_vars:
+  # 固定 3.12，避免 Render 默认选 3.14 导致 pydantic-core / PyO3 无法编译
+  - key: PYTHON_VERSION
+    value: "3.12.8"
   - key: APP_ENV
     value: production
   - key: APP_HOST

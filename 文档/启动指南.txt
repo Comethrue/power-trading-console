@@ -1,0 +1,3 @@
+在主文件目录中输入以下内容：
+Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+.\start-all.ps1
