@@ -1,0 +1,26 @@
+# 本地/测试环境一键启动 API + 持久化数据库卷
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - power_trading_data:/data
+    environment:
+      APP_APP_ENV: production
+      APP_AUTH_ENABLED: "true"
+      APP_AUTH_JWT_SECRET: ${APP_AUTH_JWT_SECRET:-change-me-in-production}
+      # 外部系统（可选）：指向真实交易中心 / 计量系统网关
+      # APP_TRADING_CENTER_BASE_URL: https://trade-center.example.com
+      # APP_TRADING_CENTER_API_KEY: ${TC_API_KEY}
+      # APP_METERING_BASE_URL: https://metering.example.com
+      # APP_METERING_API_KEY: ${METER_API_KEY}
+      # OIDC（可选）
+      # APP_AUTH_OIDC_ENABLED: "true"
+      # APP_AUTH_OIDC_ISSUER: https://idp.example.com/realms/power
+      # APP_AUTH_OIDC_AUDIENCE: power-trading-api
+
+volumes:
+  power_trading_data:

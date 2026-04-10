@@ -1,0 +1,231 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-dark-50 text-gray-100 font-sans antialiased;
+    overflow-x: hidden;
+  }
+
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    @apply bg-dark-100;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    @apply bg-cyan-600/55 rounded-full;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyan-500/75;
+  }
+
+  ::selection {
+    @apply bg-cyan-500/25 text-cyan-50;
+  }
+}
+
+@layer components {
+  /* 玻璃态面板（深空蓝玻璃） */
+  .glass-panel {
+    @apply bg-dark-200/55 backdrop-blur-xl border border-cyan-500/15 rounded-2xl;
+    box-shadow:
+      0 8px 36px rgba(0, 8, 24, 0.55),
+      0 0 24px rgba(34, 211, 238, 0.04),
+      inset 0 1px 0 rgba(186, 230, 253, 0.06);
+  }
+
+  /* 霓虹发光边框（电蓝青） */
+  .neon-border {
+    @apply border border-cyan-400/20;
+    box-shadow:
+      0 0 18px rgba(34, 211, 238, 0.1),
+      inset 0 0 14px rgba(56, 189, 248, 0.04);
+  }
+
+  /* 渐变标题文字 */
+  .text-gradient {
+    @apply bg-gradient-to-r from-cyan-200 via-sky-300 to-cyan-400 bg-clip-text text-transparent;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* 电光脉冲效果 */
+  .electric-pulse {
+    animation: pulseGlow 2s ease-in-out infinite;
+  }
+
+  /* 扫描线效果 */
+  .scan-line {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-line::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(34, 211, 238, 0.65), transparent);
+    animation: scan 3s linear infinite;
+  }
+
+  /* 主要按钮（电离青蓝） */
+  .btn-neon {
+    @apply relative overflow-hidden px-6 py-2.5 rounded-xl font-semibold text-sm
+           transition-all duration-300 ease-out;
+    @apply bg-gradient-to-r from-sky-600 to-cyan-500;
+    @apply text-white;
+    box-shadow:
+      0 4px 22px rgba(14, 165, 233, 0.28),
+      0 0 0 1px rgba(0, 12, 28, 0.35) inset;
+    @apply hover:from-sky-500 hover:to-cyan-400;
+    @apply hover:shadow-[0_4px_28px_rgba(34,211,238,0.35)] hover:scale-[1.02];
+    @apply active:scale-[0.98];
+    @apply disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100;
+  }
+
+  .btn-neon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transform: translateX(-100%);
+    transition: transform 0.5s;
+  }
+
+  .btn-neon:hover::before {
+    transform: translateX(100%);
+  }
+
+  /* 次要按钮 */
+  .btn-outline {
+    @apply relative overflow-hidden px-6 py-2.5 rounded-xl font-medium text-sm
+           border border-cyan-500/35 text-cyan-100/90;
+    @apply transition-all duration-300;
+    @apply hover:bg-cyan-500/10 hover:border-cyan-400/50 hover:text-cyan-50;
+    @apply active:scale-[0.98];
+  }
+
+  /* 输入框 */
+  .input-glow {
+    @apply w-full px-4 py-2.5 rounded-xl text-sm
+           bg-dark-200/80 border border-cyan-500/20 text-gray-100
+           placeholder-gray-500 transition-all duration-300;
+    @apply focus:outline-none focus:border-cyan-400/45 focus:ring-2 focus:ring-cyan-500/15;
+    box-shadow: inset 0 1px 0 rgba(186, 230, 253, 0.05);
+  }
+
+  /* 数字卡片 */
+  .stat-glow-card {
+    @apply relative overflow-hidden rounded-2xl p-5 glass-panel neon-border;
+    @apply transition-all duration-300;
+    @apply hover:border-cyan-400/35;
+    @apply hover:scale-[1.02];
+  }
+
+  /* 表格 */
+  .data-table {
+    @apply w-full text-sm;
+  }
+
+  .data-table thead {
+    @apply bg-dark-200/80;
+  }
+
+  .data-table thead th {
+    @apply px-4 py-3 text-left text-xs font-semibold text-cyan-300 uppercase tracking-wider
+           border-b border-cyan-500/15;
+  }
+
+  .data-table tbody tr {
+    @apply border-b border-cyan-500/5 transition-colors duration-200;
+    @apply hover:bg-cyan-500/5;
+  }
+
+  .data-table tbody td {
+    @apply px-4 py-3 text-gray-400;
+  }
+
+  .data-table tbody td.num {
+    @apply text-right font-mono text-cyan-300 font-semibold;
+  }
+
+  /* 状态标签 */
+  .status-dot {
+    @apply inline-block w-2 h-2 rounded-full mr-2;
+  }
+
+  .tag-active {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
+           bg-emerald-500/10 text-emerald-300 border border-emerald-500/20;
+  }
+
+  .tag-pending {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
+           bg-cyan-500/10 text-cyan-300 border border-cyan-500/20;
+  }
+
+  .tag-expired {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
+           bg-gray-500/10 text-gray-400 border border-gray-500/20;
+  }
+
+  .tag-error {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
+           bg-rose-500/10 text-rose-300 border border-rose-500/20;
+  }
+
+  .tag-info {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold
+           bg-cyan-500/10 text-cyan-300 border border-cyan-500/20;
+  }
+
+  /* 网格背景 */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(34, 211, 238, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* 空状态 */
+  .empty-state {
+    @apply flex flex-col items-center justify-center py-16 text-gray-500 gap-3;
+  }
+
+  .empty-state i {
+    @apply text-5xl opacity-30;
+  }
+
+  /* 滚动容器 */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.cyan[600]') theme('colors.dark[200]');
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 5px rgba(34, 211, 238, 0.35), 0 0 12px rgba(56, 189, 248, 0.2); }
+  50% { box-shadow: 0 0 18px rgba(34, 211, 238, 0.55), 0 0 36px rgba(14, 165, 233, 0.28); }
+}
+
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}

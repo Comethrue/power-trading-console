@@ -1,0 +1,36 @@
+# Render 部署配置
+# 官网: https://render.com
+# 免费额度: 750小时/月，冷启动约30秒
+
+# 服务类型：Web Service
+service_type: web
+
+# 服务名称
+name: power-trading-api
+
+# 构建环境
+runtime: python312
+
+# 构建命令
+build_command: pip install -r requirements.txt
+
+# 启动命令
+start_command: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+
+# 收费计划（free = 免费）
+plan: free
+
+# 环境变量（敏感信息请在 Render Dashboard 中设置）
+env_vars:
+  - key: APP_ENV
+    value: production
+  - key: APP_HOST
+    value: 0.0.0.0
+  - key: APP_PORT
+    value: 10000
+  # JWT 密钥 - 请在 Render Dashboard 中修改为更安全的值
+  - key: APP_AUTH_JWT_SECRET
+    sync: false
+  # 数据库路径 - Render 使用持久化磁盘
+  - key: DATABASE_PATH
+    value: /var/data/power_trading.db

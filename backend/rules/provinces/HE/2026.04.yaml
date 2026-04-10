@@ -1,0 +1,20 @@
+province_code: HE
+version: "2026.04"
+effective_start: "2026-04-01"
+effective_end: null
+
+trade:
+  price_min: 0
+  price_max: 1420
+  volume_min: 0
+  volume_max: 500
+  timeslot_max_count: 96
+
+risk:
+  base_cost: 11000
+  medium_threshold: 0.35
+  high_threshold: 0.68
+
+settlement:
+  max_cycle_days: 31
+  deviation_penalty_coef: 1.21
