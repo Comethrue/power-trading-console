@@ -41,14 +41,24 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. 构建前端
+      # 4. 将 API 地址注入到运行时配置文件
+      - name: Inject API base URL
+        run: |
+          if [ -n "$VITE_API_BASE" ]; then
+            echo "注入 API 地址: $VITE_API_BASE"
+            sed -i "s|API_BASE: '.*'|API_BASE: '$VITE_API_BASE'|g" public/config.js
+          else
+            echo "警告: VITE_API_BASE 未设置，使用默认地址"
+          fi
+
+      # 5. 构建前端
       - name: Build
         env:
           VITE_BASE_URL: ${{ vars.FRONTEND_BASE_URL || '/power-trading-console/' }}
           VITE_API_BASE: ${{ vars.API_BASE_URL }}
         run: npm run build
 
-      # 5. 上传到 GitHub Pages
+      # 6. 上传到 GitHub Pages
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:

@@ -14,7 +14,11 @@ export function useSystemHealth(intervalMs = 20000) {
 
   async function ping() {
     try {
-      const resp = await fetch('/api/v1/health', { method: 'GET' })
+      // 使用运行时配置的 API 地址（window.APP_CONFIG 在 index.html 中优先加载）
+      const apiBase =
+        (typeof window !== 'undefined' && window.APP_CONFIG?.API_BASE) ||
+        'https://power-trading-console.onrender.com';
+      const resp = await fetch(`${apiBase}/api/v1/health`, { method: 'GET' })
       const data = await resp.json().catch(() => ({}))
       if (resp.ok && data.success && data.data?.status === 'healthy') {
         state.status = 'ok'

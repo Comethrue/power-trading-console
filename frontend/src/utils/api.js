@@ -1,4 +1,22 @@
-const BASE_URL = import.meta.env.VITE_API_BASE || ''
+/**
+ * 获取 API 基础地址
+ *
+ * 优先级：
+ * 1. 运行时配置 window.APP_CONFIG.API_BASE（由 GitHub Actions 构建时注入）
+ * 2. 构建时环境变量 VITE_API_BASE（备选）
+ * 3. 默认值（兜底）
+ */
+function getApiBase() {
+  if (typeof window !== 'undefined' && window.APP_CONFIG && window.APP_CONFIG.API_BASE) {
+    return window.APP_CONFIG.API_BASE;
+  }
+  if (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_BASE) {
+    return import.meta.env.VITE_API_BASE;
+  }
+  return 'https://power-trading-console.onrender.com';
+}
+
+const BASE_URL = getApiBase();
 
 function getHeaders() {
   const token = localStorage.getItem('auth_token')

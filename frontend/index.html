@@ -11,6 +11,8 @@
   </head>
   <body>
     <div id="app"></div>
+    <!-- 运行时配置必须在主模块之前加载，确保 API 地址在应用初始化时可用 -->
+    <script src="/config.js"></script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
